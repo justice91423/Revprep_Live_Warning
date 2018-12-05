@@ -1,0 +1,77 @@
+// ==UserScript==
+// @name     Live_Warning 2.0
+// @version  1
+// @grant    none
+// @include *revolutionprep.com/*
+// @require  http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+// @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
+// ==/UserScript==
+
+var favicon_link_html = document.createElement('link');
+favicon_link_html.rel = 'icon';
+favicon_link_html.href = 'https://vignette.wikia.nocookie.net/undeadgaming/images/7/71/Warning_Icon.png/revision/latest?cb=20110207061308';
+favicon_link_html.type = 'image/x-icon';
+
+try {
+  document.getElementsByTagName('head')[0].appendChild( favicon_link_html );
+}
+catch(e) { }
+
+function navbarFunction (jNode) {
+
+    $('#warning_bar').remove();
+    var x = document.querySelectorAll(".sidebar");
+    x[0].style.textShadow = "0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black";
+    x[0].style.backgroundImage = "linear-gradient(to left, rgba(0, 0, 0, .8), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), repeating-linear-gradient(45deg, transparent, transparent 35px, #cc9900 35px, #cc9900 70px)";
+}
+
+function buttonFunction (jNode) {
+    function unlock() {
+        var lockedButtons = document.querySelectorAll(".locked");
+        var eyeballs = document.querySelectorAll("#lockIcon");
+        for (var i = 0; i < lockedButtons.length; i++) {
+            lockedButtons[i].setAttribute( 'style', 'display: inline-block !important' );
+            lockedButtons[i].style.textShadow = "0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black";
+            lockedButtons[i].style.backgroundImage = "repeating-linear-gradient(45deg, black, black 10px, #ffc61a 10px, #ffc61a 20px)";
+        }
+        $('#lockIcon').remove();
+    }
+    var button = document.querySelectorAll(".btn");
+    $('#lockIcon').remove();
+
+    for (var i = 0; i < button.length; i++) {
+        var dangerWords = ["Create", "Update", "Submit", "Save", "Finish", "Complete", "Remove", "Deactivate", "Terminate"];
+        var foundDangerWord = false;
+        for (var y = 0; y < dangerWords.length; y++) {
+            if(button[i].innerHTML.includes(dangerWords[y])){
+                foundDangerWord = true;
+            }
+        }
+        if(!foundDangerWord){
+            continue;
+        }
+        var dangerButton, newElement;
+        dangerButton = button[i];
+        if (!document.getElementById('lockIcon')) {
+            newElement = document.createElement('img');
+            newElement.style.height = "40px";
+            newElement.style.width = "40px";
+            newElement.style.marginLeft  = "10px";
+            newElement.id = "lockIcon";
+            newElement.src = "https://us.123rf.com/450wm/faysalfarhan/faysalfarhan1711/faysalfarhan171147888/89675708-unlock-icon-isolated-on-special-soft-green-square-button-abstract-illustration.jpg?ver=6";
+            dangerButton.parentNode.insertBefore(newElement, dangerButton.nextSibling);
+            newElement.addEventListener("click", unlock, false);
+        }
+        button[i].className += " locked";
+        button[i].setAttribute( 'style', 'display: none !important' );
+    }
+}
+
+$("html").prepend ( '<div id="warning_bar" style="height:40px; width:100%; color:red; font-size:300%; text-shadow: 2px 2px 3px black; background-color: black; font-weight: bold; background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, #ffc61a 35px, #ffc61a 70px);">\
+                   <center>! ! ! This is LIVE ! ! !</center>\
+                                        </div>');
+waitForKeyElements (".sidebar", navbarFunction);
+waitForKeyElements (".btn", buttonFunction);
+
+
+
