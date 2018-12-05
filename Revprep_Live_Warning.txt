@@ -67,7 +67,7 @@ function buttonFunction (jNode) {
     }
 }
 
-$("html").prepend ( '<div id="warning_bar" style="height:40px; width:100%; color:red; font-size:300%; text-shadow: 2px 2px 3px black; background-color: black; font-weight: bold; background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, #ffc61a 35px, #ffc61a 70px);">\
+$("html").prepend ( '<div id="warning_bar" style="height:40px; width:100%; color:red; font-size:35px; text-shadow: 2px 2px 3px black; background-color: black; font-weight: bold; background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, #ffc61a 35px, #ffc61a 70px);">\
                    <center>! ! ! This is LIVE ! ! !</center>\
                                         </div>');
 waitForKeyElements (".sidebar", navbarFunction);
